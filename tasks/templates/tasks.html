@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Tasks</h1>
+
+    <!-- Task Creation Form -->
+    <form method="POST" action="/">
+        {% csrf_token %}
+        {{ TaskForm.title }}
+        <input class="btn" type="submit" value="Create Task">
+    </form>
+
+    <!-- Task List -->
+    {% for i in tasks %}
+    <div class="task-item">
+        <br>
+        <h3>{{ i.title }}</h3>
+        <a href="{% url 'update-task' i.id %}">Update </a>
+        <a href="{% url 'delete-task' i.id %}"> Detele </a>
+        {% if i.completed == True %}
+         <h2> Task is Completed : Yes </h2>
+        {% else %}
+         <h2> Task is not Completed : No </h2>
+
+        {%  endif %}
+
+        <h4>Completed: {{ i.completed }}</h4>
+        <h4>Created: {{ i.created }}</h4>
+        <br>
+    </div>
+    {% endfor %}
+</body>
+</html>
